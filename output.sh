@@ -1,10 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-mkdir -p ~/release/{lib,bin}
-cp -a /usr/local/lib/{libheif.so*,libraw_r.so*} ~/release/lib/
-cp /usr/local/bin/magick ~/release/bin/
-
-mkdir -p ~/dev/lib/pkgconfig
-cp -ar /usr/local/lib/libheif* ~/dev/lib/
-cp -ar /usr/local/lib/pkgconfig/libheif* ~/dev/lib/pkgconfig
+mkdir -p /output/{lib,bin,include}
+cp -a /usr/local/lib/{libheif*,libraw_r*} /output/lib/
+cp -a /usr/local/include/{libheif,libraw} /output/include/
+cp /usr/local/bin/magick /output/bin/
