@@ -1,16 +1,16 @@
 #!/bin/bash
 set -euo pipefail
 
-: ${HOST_COMPILER=x86_64-linux-gnu}
-: ${HOST_ARCH=amd64}
+: ${DEB_HOST_MULTIARCH=x86_64-linux-gnu}
+: ${DEB_HOST_ARCH=amd64}
 
-echo Compiler: ${HOST_COMPILER} Arch: ${HOST_ARCH}
+echo Compiler: ${DEB_HOST_MULTIARCH} Arch: ${DEB_HOST_ARCH}
 
-apt-get install -y libaom-dev:${HOST_ARCH} libavcodec-dev:${HOST_ARCH} libdav1d-dev:${HOST_ARCH} libde265-dev:${HOST_ARCH} libgdk-pixbuf-2.0-dev:${HOST_ARCH} libjpeg-dev:${HOST_ARCH} libopenjp2-7-dev:${HOST_ARCH} libpng-dev:${HOST_ARCH} librav1e-dev:${HOST_ARCH} libsvtav1enc-dev:${HOST_ARCH} libx265-dev:${HOST_ARCH}
+apt-get install -y libaom-dev:${DEB_HOST_ARCH} libavcodec-dev:${DEB_HOST_ARCH} libdav1d-dev:${DEB_HOST_ARCH} libde265-dev:${DEB_HOST_ARCH} libgdk-pixbuf-2.0-dev:${DEB_HOST_ARCH} libjpeg-dev:${DEB_HOST_ARCH} libopenjp2-7-dev:${DEB_HOST_ARCH} libpng-dev:${DEB_HOST_ARCH} librav1e-dev:${DEB_HOST_ARCH} libsvtav1enc-dev:${DEB_HOST_ARCH} libx265-dev:${DEB_HOST_ARCH}
 curl -s https://api.github.com/repos/strukturag/libheif/releases/latest | grep "tarball_url" | cut -d : -f 2,3 | tr -d ' ,"' | wget -i - -O ./libheif.tar.gz
 tar xfv ./libheif.tar.gz
 cd *-libheif-*
-cmake --preset=release -DCMAKE_SYSTEM_PROCESSOR=${HOST_ARCH} -DCMAKE_C_COMPILER=${HOST_COMPILER}-gcc -DCMAKE_CXX_COMPILER=${HOST_COMPILER}-g++ -DPKG_CONFIG_EXECUTABLE=${HOST_COMPILER}-pkg-config -DCMAKE_LIBRARY_ARCHITECTURE=${HOST_COMPILER} -DPLUGIN_DIRECTORY=/usr/lib/${HOST_COMPILER}/libheif/plugins .
+cmake --preset=release -DCMAKE_SYSTEM_PROCESSOR=${DEB_HOST_ARCH} -DCMAKE_C_COMPILER=${DEB_HOST_MULTIARCH}-gcc -DCMAKE_CXX_COMPILER=${DEB_HOST_MULTIARCH}-g++ -DPKG_CONFIG_EXECUTABLE=${DEB_HOST_MULTIARCH}-pkg-config -DCMAKE_LIBRARY_ARCHITECTURE=${DEB_HOST_MULTIARCH} -DPLUGIN_DIRECTORY=/usr/lib/${DEB_HOST_MULTIARCH}/libheif/plugins .
 make
 make install
 cd ..
