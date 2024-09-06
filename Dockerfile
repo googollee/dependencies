@@ -19,5 +19,8 @@ RUN export $(cat /env) && ./build_imagemagick.sh
 COPY download_jellyfin-ffmpeg.sh /tmp/build/
 RUN export $(cat /env) && ./download_jellyfin-ffmpeg.sh
 
+COPY output.sh /
+RUN /output.sh
+
 FROM debian:bookworm-slim AS release
-COPY --from=build /output /output
+COPY --from=build /artifacts.tar.gz /
