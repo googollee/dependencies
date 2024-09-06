@@ -14,3 +14,8 @@ cmake --preset=release -DCMAKE_SYSTEM_PROCESSOR=${DEB_HOST_ARCH} -DCMAKE_C_COMPI
 make
 make install
 cd ..
+
+mkdir -p /output/{lib,include}
+cp -a /usr/local/lib/libheif* /output/lib/
+cp -a /usr/local/include/libheif /output/include/
+file /usr/local/lib/libraw_r.so*

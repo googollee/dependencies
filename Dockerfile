@@ -16,10 +16,8 @@ COPY build_libheif.sh /tmp/build/
 RUN export $(cat /env) && ./build_libheif.sh
 COPY build_imagemagick.sh /tmp/build/
 RUN export $(cat /env) && ./build_imagemagick.sh
-
-WORKDIR /
-COPY output.sh /
-RUN /output.sh
+COPY download_jellyfin-ffmpeg.sh /tmp/build/
+RUN export $(cat /env) && ./download_jellyfin-ffmpeg.sh
 
 FROM debian:bookworm-slim AS release
 COPY --from=build /output /output

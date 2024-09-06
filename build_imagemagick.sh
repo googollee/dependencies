@@ -14,3 +14,7 @@ cd ImageMagick-*
 make
 make install
 cd ..
+
+mkdir -p /output/bin
+cp /usr/local/bin/magick /output/bin/
+file /output/bin/magick

@@ -15,3 +15,8 @@ autoreconf --install
 make
 make install
 cd ..
+
+mkdir -p /output/{lib,include}
+cp -a /usr/local/lib/libraw_r* /output/lib/
+cp -a /usr/local/include/libraw /output/include/
+file /usr/local/lib/libheif.so*
