@@ -2,12 +2,15 @@ name: Build
 
 on:
   push:
-    branches: ['*']
+    branches: [master]
   pull_request:
-    branches: ['*']
+    branches: [master]
+  schedule:
+    # At 00:00 every 1st day of month. Details in https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
+    - cron: '0 0 1 * *'
 
 env:
-  IS_PUSHING_IMAGES: ${{ github.event_name != 'pull_request' && github.repository == 'photoview/dependencies' }}
+  IS_PUSHING_IMAGES: ${{ github.event_name == 'pull_request' && github.repository == 'photoview/dependencies' }}
   DOCKER_IMAGE: ghcr.io/photoview/dependencies
   PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
 
@@ -24,7 +27,6 @@ jobs:
         uses: docker/setup-qemu-action@v3
         with:
           platforms: ${{ env.PLATFORMS }}
-
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -45,12 +47,6 @@ jobs:
           images: ${{ env.DOCKER_IMAGE }}
           # Docker tags based on the following events/attributes
           tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
             type=sha
 
       - name: Build and push
@@ -67,6 +63,3 @@ jobs:
           sbom: true
           provenance: mode=max
           annotations: ${{ steps.docker_meta.outputs.annotations }}
-          build-args: |
-            VERSION=${{ github.ref_name }}
-            COMMIT_SHA=${{ github.sha }}

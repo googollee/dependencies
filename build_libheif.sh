@@ -18,4 +18,4 @@ cd ..
 mkdir -p /output/{lib,include}
 cp -a /usr/local/lib/libheif* /output/lib/
 cp -a /usr/local/include/libheif /output/include/
-file /usr/local/lib/libraw_r.so*
+file /usr/local/lib/libheif.so*
