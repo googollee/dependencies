@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [master]
   schedule:
-    # At 00:00 every 1st day of month. Details in https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
-    - cron: '0 0 1 * *'
+    # At 23:18 every Wednesday, 2 hours before `photoview`. Details in https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
+    - cron: '18 23 * * 3'
 
 env:
   IS_PUSHING_IMAGES: ${{ github.event_name == 'pull_request' && github.repository == 'photoview/dependencies' }}
@@ -37,7 +37,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.PACKS_TOKEN }}
 
       - name: Docker meta
         id: docker_meta
