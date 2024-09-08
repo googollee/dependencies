@@ -12,6 +12,8 @@ on:
 env:
   IS_PUSHING_IMAGES: ${{ github.event_name == 'pull_request' && github.repository == 'photoview/dependencies' }}
   DOCKER_IMAGE: ghcr.io/photoview/dependencies
+  DOCKER_USERNAME: kkovaletp
+  DOCKER_PASSWORD: ${{ secrets.PACKS_TOKEN }}
   PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
 
 jobs:
@@ -36,8 +38,8 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.PACKS_TOKEN }}
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker meta
         id: docker_meta
