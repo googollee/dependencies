@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM:-linux/amd64} debian:bookworm AS build
+FROM --platform=${BUILDPLATFORM:-linux/amd64} debian:bookworm-slim AS build
 ARG TARGETPLATFORM
 
 # See for details: https://github.com/hadolint/hadolint/wiki/DL4006
