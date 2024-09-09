@@ -1,5 +1,5 @@
-#!/bin/bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
 cd /output
 tar czfv /artifacts.tar.gz *

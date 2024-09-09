@@ -1,8 +1,8 @@
-#!/bin/bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
-: ${DEB_HOST_MULTIARCH=x86_64-linux-gnu}
-: ${DEB_HOST_ARCH=amd64}
+: ${DEB_HOST_MULTIARCH=`uname -m`-linux-gnu}
+: ${DEB_HOST_ARCH=`dpkg --print-architecture`}
 
 echo Compiler: ${DEB_HOST_MULTIARCH} Arch: ${DEB_HOST_ARCH}
 
@@ -15,7 +15,7 @@ make
 make install
 cd ..
 
-mkdir -p /output/{lib,include}
+mkdir -p /output/lib /output/include
 cp -a /usr/local/lib/libheif* /output/lib/
 cp -a /usr/local/include/libheif /output/include/
 file /usr/local/lib/libheif.so*

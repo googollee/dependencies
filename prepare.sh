@@ -1,7 +1,7 @@
-#!/bin/bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
-: ${TARGETPLATFORM=linux/amd64}
+: ${TARGETPLATFORM=linux/`dpkg --print-architecture`}
 
 TARGETOS="$(echo $TARGETPLATFORM | cut -d"/" -f1)"
 TARGETARCH="$(echo $TARGETPLATFORM | cut -d"/" -f2)"
